@@ -1,0 +1,13 @@
+Region,Sales_Rep,Product,Revenue,Month
+North,Amit,CRM Software,12000,Jan
+South,Riya,CRM Software,9000,Jan
+East,Karan,Analytics Tool,11000,Jan
+West,Sarah,CRM Software,15000,Jan
+North,Amit,Analytics Tool,14000,Feb
+South,Riya,CRM Software,10000,Feb
+East,Karan,Analytics Tool,12000,Feb
+West,Sarah,CRM Software,17000,Feb
+North,Amit,CRM Software,13000,Mar
+South,Riya,Analytics Tool,9500,Mar
+East,Karan,CRM Software,11500,Mar
+West,Sarah,Analytics Tool,16000,Mar
