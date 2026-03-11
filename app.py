@@ -1,16 +1,15 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-
+import plotly.express as px
 
 st.set_page_config(page_title="Talking Rabbitt", layout="wide")
 
 st.title("🐰 Talking Rabbitt")
 st.subheader("Conversational AI for your business data")
 
-st.write("Upload a dataset and ask questions about your business.")
+st.write("Upload a dataset and ask questions about it.")
 
-uploaded_file = st.file_uploader("Upload CSV File", type=["csv"])
+uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
@@ -21,42 +20,38 @@ if uploaded_file:
     question = st.text_input("Ask a question about your data")
 
     if question:
-
-        st.write("### AI Answer")
-
         if "region" in question.lower():
-
             result = df.groupby("Region")["Revenue"].sum()
 
             top_region = result.idxmax()
             top_value = result.max()
 
-            st.write(f"The **{top_region}** region generated the highest revenue: **${top_value}**")
+            st.success(f"The region with highest revenue is **{top_region}** with ${top_value}")
 
-            st.write("### Revenue by Region")
+            fig = px.bar(
+                x=result.index,
+                y=result.values,
+                labels={"x":"Region","y":"Revenue"},
+                title="Revenue by Region"
+            )
 
-            fig, ax = plt.subplots()
-
-            result.plot(kind="bar", ax=ax)
-
-            ax.set_ylabel("Revenue")
-
-            st.pyplot(fig)
+            st.plotly_chart(fig)
 
         elif "product" in question.lower():
-
             result = df.groupby("Product")["Revenue"].sum()
 
             best_product = result.idxmax()
 
-            st.write(f"The highest revenue product is **{best_product}**")
+            st.success(f"The highest revenue product is **{best_product}**")
 
-            fig, ax = plt.subplots()
+            fig = px.bar(
+                x=result.index,
+                y=result.values,
+                labels={"x":"Product","y":"Revenue"},
+                title="Revenue by Product"
+            )
 
-            result.plot(kind="bar", ax=ax)
-
-            st.pyplot(fig)
+            st.plotly_chart(fig)
 
         else:
-
-            st.write("Try asking about **region revenue** or **product performance**.")
+            st.info("Try asking about **region revenue** or **product performance**.")
